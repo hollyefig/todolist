@@ -1,0 +1,605 @@
+* {
+    margin:0px;
+    padding: 0px;
+    box-sizing: border-box;
+}
+
+body {
+    --bold: 700;
+    font-family: 'Roboto Slab', serif;
+    --font: 'Roboto Slab', serif;
+    --rightSideBg: #f5f5f5;
+    --complete: rgb(178 229 99);
+    --incomplete:rgb(214, 76, 76);
+
+}
+
+.default {
+    --mainColor: #98c8cb;
+    
+}
+
+.blurBg {
+    --blur: blur(10px);
+    position: absolute;
+    top:0px;
+    left:0px;
+    width: 100%;
+    height: 100vh;
+    backdrop-filter: var(--blur);
+    -webkit-backdrop-filter: var(--blur);
+    -moz-backdrop-filter: var(--blur);
+    z-index: 10;
+}
+
+.newProjectPopup {
+    --height: 300px;
+    --width: 500px;
+    position: absolute;
+    z-index: 11;
+    padding:1em;
+    background-color: #fff;
+    box-shadow: 2px 2px 8px rgb(147, 147, 147);
+    height: var(--height);
+    width: var(--width);
+    top: calc(50% - var(--height) / 2);
+    left: calc(50% - var(--width) / 2);
+    border-radius: 10px;
+}
+
+.displayNone {
+    display: none;
+}
+
+
+/* new project popup grid  */
+
+.newProjectPopGrid {
+    height:100%;
+}
+
+.newProjectPopGrid form {
+    height: 85%;
+} 
+
+.newProjectPopGrid fieldset {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: 1fr 1fr 1fr;
+    height: 100%;
+}
+
+.newProjectPopGrid fieldset div:first-child {
+    grid-column: 1 / 4;
+}
+
+.newProjectPopGrid fieldset div:last-child {
+    grid-column: 1 / 5;
+}
+
+.newProjectPopGrid fieldset div:nth-child(3),
+.newProjectPopGrid fieldset div:nth-child(4) {
+    display: grid;
+    grid-row: 2 / 3;
+    justify-content: center;
+    align-items: center;
+}
+
+.newProjectPopGrid fieldset div:nth-child(3) {
+    grid-column: 1 / 3;
+}
+
+.newProjectPopGrid fieldset div:nth-child(4) {
+    grid-column: 3 / 5;
+}
+
+/* new project divs  */
+.newProjectPopGrid .newProjTitle {
+    font-size: 1.5rem;
+    font-weight: var(--bold);
+    color:var(--mainColor);
+}
+
+.newProjectPopup fieldset {
+    border:0px;
+}
+
+.newProjectPopGrid fieldset > div {
+    padding:.5em;
+}
+
+/* fieldset first div  */
+.newProjectPopGrid fieldset > div:first-child label {
+    font-size: .8rem;
+}
+
+.newProjectPopGrid fieldset div:first-child input {
+    width: 90%;
+    padding:.5em;
+    margin: .5em 0px;
+    border:0px;
+    appearance: none;
+    border-bottom: 1px solid var(--mainColor);
+    background-color: var(--rightSideBg);
+    font-family: var(--font);
+}
+
+.newProjectPopGrid fieldset div:first-child input:focus {
+    outline:none;
+}
+
+/* fieldset second div  */
+.newProjectPopGrid fieldset > div:nth-child(2) {
+    display: grid;
+    align-items: center;
+}
+
+.newProjectPopGrid fieldset > div:nth-child(2)::before {
+    content: 'Priority';
+    display: block;
+    font-size: .8rem;
+}
+
+.newProjectPopGrid fieldset > div:nth-child(2) select {
+    border:0px;
+    border-bottom: 1px solid var(--mainColor);
+    padding:.2em 0px;
+}
+
+/* fieldset 3rd div  */
+.newProjectPopGrid fieldset div:nth-child(3)::before {
+    content: 'Start Date';
+    display: block;
+    font-size: .8rem;
+}
+
+.newProjectPopGrid fieldset div:nth-child(4)::before {
+    content: 'End Date';
+    display: block;
+    font-size: .8rem;
+}
+
+.newProjectPopGrid fieldset div:nth-child(3) input,
+.newProjectPopGrid fieldset div:nth-child(4) input {
+    border:0px;
+    font-family: var(--font);
+    cursor: pointer;
+    border-bottom: 1px solid var(--mainColor);
+    padding:.2em 0px;
+}
+
+.createProjectButton {
+    width: 100%;
+    padding: .5em;
+    border:none;
+    cursor: pointer;
+    display: grid;
+    justify-items: center;
+    align-items: center;
+}
+
+.createProjectButton button {
+    background-color: var(--mainColor);
+    padding:.5em;
+    font-size: 1rem;
+    font-family: var(--font);
+    font-weight: var(--bold);
+    color:#fff;
+    border-radius: 10px;
+}
+
+/* begin wrapper  */
+/*  */
+/*  */
+/*  */
+.wrapper {
+    height:100vh;
+    width: 100%;
+    display: grid;
+    grid-template-columns: 340px 1fr;
+    grid-template-rows: 70px 1fr;
+    position: relative;
+    overflow-y: hidden;
+
+}
+
+.wrapper .topBar,
+.wrapper .rightBody {
+    padding:1em;
+}
+
+.topBar {
+    grid-column: 1 / 3;
+    background-color: var(--mainColor);
+    box-shadow: 0px -2px 8px #8a8a8a;
+    position: relative;
+    z-index: 5;
+    color:#fff;
+    display: grid;
+    align-content: center;
+    align-items: center;
+    grid-auto-flow: column;
+    justify-content: start;
+    column-gap:10px;
+}
+
+.topBar .material-symbols-outlined {
+    font-size: 2.5rem;
+}
+
+
+/* sidebar */
+
+.sideBar {
+    background: #fff;
+    display: grid;
+    grid-auto-flow: row;
+    grid-template-rows: 5fr 1fr;
+    overflow-y: hidden;
+}
+
+.listWrapper {
+    overflow-y: scroll;
+    margin:1em 0px 0px 0px;
+    position: relative;
+    width: 100%;
+}
+
+.listWrapper > div {
+    display: block;
+    cursor: pointer;
+    margin: .5em 0px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    align-items: end;
+}
+
+
+.listWrapper span {
+    display: block;
+    margin:0px 0px 0px .5em;
+    padding:.6em 0px;
+
+}
+
+.listWrapper > div::after {
+    content: '';
+    display: block;
+    width:0%;
+    height:2px;
+    background-color: var(--mainColor);
+    position: absolute;
+    transition: all .3s linear;
+}
+
+.listWrapper > div:hover::after,
+.listWrapper > div.active::after {
+    width:100%;
+}
+
+.listWrapper > div:hover {
+    background-color: var(--rightSideBg);
+    color:#000;
+}
+
+.listWrapper .active {
+    background-color: var(--rightSideBg);
+    color:#000;
+}
+
+.listWrapper > div > div {
+    height: 100%;
+    display: grid;
+    justify-items: end;
+    align-items: center;
+    padding:0px .5em 0px 0px;
+}
+
+.listWrapper > div > div > div {
+    --dim: 25px;
+    width: var(--dim);
+    height: var(--dim);
+    border-radius: 12px;
+    background-color: var(--mainColor);
+    display: grid;
+    justify-items: center;
+    align-items: center;
+    color:#fff;
+}
+
+.newProjectButton {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.newProjectButton button {
+    width: 90%;
+    background-color: var(--mainColor);
+    cursor: pointer;
+    padding:.5em;
+    border:none;
+    border-radius: 20px;
+    color:#fff;
+    font-weight: var(--bold);
+    font-family: var(--font);
+    font-size: 1rem;
+    display: grid;
+    align-items: center;
+    justify-content: center;
+    grid-auto-flow: column;
+    column-gap: 5px;
+}
+
+.newProjectButton button:focus {
+    outline: none;
+}
+
+/* right side */
+/*  */
+/*  */
+/*  */
+.rightBody {
+    background-color: var(--rightSideBg);
+    height: 100%;
+    overflow-y: scroll;
+}
+
+.projNodeWrapper {
+    width: 100%;
+    background-color:#fff;
+    box-shadow: 1px 1px 2px rgb(215, 215, 215);
+    margin:1em 0px;
+    display: grid;
+    grid-template-columns: 2px 1fr 1fr 1fr;
+    grid-template-rows: 35px 55px 1fr;
+    gap:9px;
+}
+
+.projNodeWrapper > div {
+    padding:.2em;
+}
+
+.projNodeWrapper > div:first-child {
+    padding:0px;
+}
+
+/* project priority div */
+.projPriorityColor {
+    height:100%;
+    width:100%;
+    grid-row: 1 / 4;
+    grid-column: 1 / 2;
+}
+
+.Low {
+    background-color: rgb(63, 195, 78);
+}
+
+.Medium {
+    background-color: rgb(236, 220, 40);
+}
+
+.High {
+    background-color: rgb(225, 66, 66);
+}
+
+/* project name div */
+.projName {
+    grid-row: 1 / 2;
+    grid-column: 2 / 4;
+    font-size: 1.2rem;
+    font-weight: var(--bold);
+    margin:.2em 0px 0px 0px;
+}
+
+/* project editor  */
+.projEditorWrapper {
+    grid-row: 1 / 2;
+    grid-column: 4 / 5;
+    justify-content: flex-end;
+    display: none;
+}
+
+.projNodeWrapper:hover .projEditorWrapper {
+    display: flex;;
+}
+
+.projEditorWrapper > div {
+    cursor: pointer;
+    font-size: 1.1rem;
+    color: #bbb;
+    padding: 0.1em 0.1em;
+}
+
+/* proj start div  */
+.projStartDiv {
+    grid-row: 2 / 3;
+    grid-column: 2 / 3;
+}
+
+.projStartDiv::before {
+    content: 'Start Date';
+    display: block;
+    color:rgb(170, 170, 170);
+    font-size: .8rem;
+}
+
+.projStartDiv::before,
+.projEndDiv::before  {
+    display: block;
+    color:rgb(170, 170, 170);
+    font-size: .8rem;
+}
+
+/* proj end div  */
+.projEndDiv {
+    grid-row: 2 / 3;
+    grid-column: 3 / 4;
+}
+
+.projEndDiv::before {
+    content: 'End Date';
+}
+
+/* days left div */
+.daysLeftDiv {
+    grid-row: 2 / 3;
+    grid-column: 4 / 5;
+    display: grid;
+    justify-items: end;
+    font-size:1.5rem;
+    margin: 0px 0.2em 0px 0px;
+}
+
+.daysLeftDiv::before {
+    content: 'Days Left';
+    display: block;
+    color:rgb(170, 170, 170);
+    font-size: .8rem;
+}
+
+/* new task div  */
+.newTaskWrapper {
+    grid-column: 2 / 5;
+    grid-row: 3 / 4;
+    display: grid;
+    align-items: center;
+    padding:0px 0px .5em 0px!important;
+}
+
+.newTaskDiv {
+    cursor: pointer;
+    font-size: .8rem;
+    color: var(--mainColor);
+    display: flex;
+    padding:.5em;
+    background-color: transparent;
+    border:2px solid var(--mainColor);
+    width: 100px;
+    justify-content: center;
+}
+
+.newTaskPopup {
+    --width: 40vw;
+    --height: 305px;
+    z-index: 12;
+    width: var(--width);
+    height: var(--height);
+    position: absolute;
+    top: calc(50% - var(--height) / 2);
+    left: calc(50% - var(--width) / 2);
+    background-color:#fff;
+    padding:1em;
+    border-radius: 10px;
+    box-shadow: 2px 2px 8px rgb(147, 147, 147);
+}
+
+.newTaskPopup > div:first-child {
+    font-size: 1.2rem;
+    font-weight: var(--bold);
+    color: var(--mainColor);
+    padding:0px 0px .5em 0px;
+}
+
+.newTaskPopup fieldset {
+    border:0px;
+    display:grid;
+    align-items: center;
+    row-gap: 10px;
+}
+
+.newTaskPopup fieldset label {
+    font-size: .8rem;
+}
+
+.newTaskPopup fieldset > div {
+    display:grid;
+}
+
+.newTaskPopup fieldset input {
+    width: 100%;
+    padding:.5em;
+    margin: .5em 0px;
+    border:0px;
+    appearance: none;
+    border-bottom: 1px solid var(--mainColor);
+    background-color: var(--rightSideBg);
+    font-family: var(--font);
+}
+
+.newTaskPopup fieldset input:focus,
+.newTaskPopup fieldset textarea:focus {
+    outline: none;
+}
+
+.newTaskPopup fieldset textarea {
+    max-height: 80px;
+    height: 80px;
+    width: 100%;
+    resize: none;
+    border:none;
+    background-color: var(--rightSideBg);
+    font-family: var(--font);
+    padding: .5em;
+    margin: 0.5em 0px;
+}
+
+.newTaskPopup fieldset button {
+    width: 100%;
+    background-color: var(--mainColor);
+    cursor: pointer;
+    padding:.5em;
+    border:none;
+    border-radius: 20px;
+    color:#fff;
+    font-weight: var(--bold);
+    font-family: var(--font);
+    font-size: 1rem;
+    display: grid;
+    align-items: center;
+    justify-content: center;
+    grid-auto-flow: column;
+    column-gap: 5px;   
+}
+
+.newTaskWrapper ul {
+    margin: 0px 0px .5em 1.5em;
+}
+
+.newTaskWrapper li {
+    list-style-type: none;
+    padding:.5em 0px;
+    display:grid;
+    grid-template-rows: 1fr 1fr;
+    grid-template-columns: 20px 1fr;
+    row-gap:5px;
+}
+
+.taskCheckDiv {
+    grid-row: 1 / 3;
+}
+
+.taskCheckDiv input[type="checkbox"] {
+    --dim: 15px;
+    appearance:none;
+    height: var(--dim);
+    width: var(--dim);
+    border-radius: 7px;
+    background-color: var(--incomplete);
+}
+
+.taskCheckDiv input[type="checkbox"]:checked {
+    background-color: var(--complete);
+}
+
+.taskNameDiv {
+    font-size: .9rem;
+}
+
+.taskDescDiv {
+    font-size: .8rem;
+    color: #a9a9a9;
+    font-style: italic;
+}
+

@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>To-Do List</title>
+    <link rel="stylesheet" href="style.css">
+    <!-- google fonts  -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@300;700&display=swap" rel="stylesheet">
+    <!-- google icons  -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" />
+</head>
+<body>
+     <!-- new proj popup  -->
+    <div id="blurBg" onclick="closeNewProject()"></div>
+    <div class="newProjectPopup displayNone" id="newProjectPopup">
+        
+        <div class="newProjectPopGrid">
+        <div class="newProjTitle">New Project</div>
+        <form action="">
+            <fieldset>
+                <div>
+                    <label for="projName">Project Name</label>
+                    <input type="text" name="projName" id="projName" value="" />
+                </div>
+
+                <div>
+                    <select name="priority" id="prioritySelect">
+                        <option value="Low">Low</option>
+                        <option value="Medium">Medium</option>
+                        <option value="High">High</option>
+                    </select>
+                </div>
+
+                <div>
+                    <input type="date" name="startDateInput" id="startDateInput" />
+                </div>
+                
+                <div>
+                    <input type="date" name="endDateInput" id="endDateInput" />
+                </div>
+
+                <div class="createProjectButton">
+                    <button type="button" class="createProjectButton" id="createProjectButton" onclick="createProject(this)">Create Project</button>
+                </div>
+                
+            </fieldset>
+        </form>
+    </div>
+    </div>
+
+    <!-- new task popup  -->
+    <div class="newTaskPopup displayNone" id="newTaskPopup">
+        <div>New Task</div>
+        <form action="">
+            <fieldset>
+                <div>
+                    <label for="tastName">Name</label>
+                    <input type="text" name="taskName" id="taskName" />
+                </div>
+                
+                <div>
+                    <label for="taskDesc">Description</label>
+                    <textarea id="taskDesc" class="taskDesc" name="taskDesc"></textarea>
+                </div>
+
+                <div>
+                    <button type="button" onclick="createTask(this)">Create Task</button>
+                </div>
+            </fieldset>
+        </form>
+    </div>
+
+    <!-- main body  -->
+    <div class="wrapper">
+        <div class="topBar">
+            <span class="material-symbols-outlined">
+                checklist
+            </span>
+            <h1>
+                To-Do List
+            </h1>
+        </div>
+
+        <div class="sideBar">
+            <div class="listWrapper">
+            
+            <div id="allProjectsList" class="active">
+                <span>All Projects</span>
+                <div id="allProjsNum">
+                    <div></div>
+                </div>
+            </div>
+
+            <div id="todayList">
+                <span>Today</span>
+            </div>
+            
+            <div id="weekList">
+                <span>This Week</span>
+            </div>
+           
+            <div id="completedList">
+                <span>Completed</span>
+            </div>
+
+        </div>
+
+            <div class="newProjectButton">
+                <button type="button" onclick="openNewProject()" style="align-self: flex-start">
+                    New Project 
+                    <span class="material-symbols-outlined">
+                    add_circle
+                    </span>
+                </button>
+            </div>
+
+        <!-- end sidebar  -->
+        </div>
+
+        <div class="rightBody">
+            <div class="allProjects">
+
+            </div>
+        </div>
+
+    </div>
+</body>
+<script src="./script.js"></script>
+<script src="dist/main.js"></script>
+</html>

@@ -1,0 +1,1 @@
+(()=>{const e=document.documentElement;document.querySelector(".allProjects");projWeekArr=[],finishedProjArr=[],e.className="default";document.addEventListener("keydown",(e=>{}))})();

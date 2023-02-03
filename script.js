@@ -7,7 +7,7 @@ let blurBg = false,
   allProjArr = [],
   projTodayArr = [],
   projWeekArr = [],
-  finishedProjArr = [],
+  projCompleteArr = [],
   activeProj,
   editProj = false,
   activeProjNum;
@@ -18,8 +18,15 @@ const theme = (() => {
 })();
 
 // project number counter
-allProjsNum = document.getElementById("allProjsNum").childNodes[1];
+let allProjsNum = document.getElementById("allProjsNum").childNodes[1],
+  todayNum = document.getElementById("todayNum").childNodes[1],
+  weekNum = document.getElementById("weekNum").childNodes[1],
+  completedNum = document.getElementById("completedNum").childNodes[1];
+
 allProjsNum.textContent = allProjArr.length;
+todayNum.textContent = projTodayArr.length;
+weekNum.textContent = projWeekArr.length;
+completedNum.textContent = projCompleteArr.length;
 
 // new project popup
 const openNewProject = () => {
@@ -44,12 +51,13 @@ document.addEventListener("keydown", (e) => {
 });
 
 // construct project
-const projConstruct = (name, priority, start, end) => {
+const projConstruct = (name, priority, start, end, countdown) => {
   return {
     name: name,
     priority: priority,
     startDate: start,
     endDate: end,
+    countdown: countdown,
   };
 };
 // create proj id
@@ -79,7 +87,6 @@ const daysLeftFunc = (e) => {
 const editProject = (e) => {
   editProj = true;
   activeProjNum = Number(e.parentNode.parentNode.getAttribute("data-id"));
-  console.log("editProj", editProj);
 
   const projName = document.getElementById("projName"),
     startDate = document.getElementById("startDateInput"),
@@ -102,8 +109,19 @@ const editProject = (e) => {
 const deleteProject = (e) => {
   const element = e.parentNode.parentNode;
   const num = Number(element.getAttribute("data-id"));
-  allProjArr.splice(num, num + 1);
+
+  allProjArr.splice(num, 1);
   element.remove();
+
+  // update id number on array and in element
+  let allNodes = document.querySelectorAll(".projNodeWrapper");
+  for (let i = 0; i < allProjArr.length; i++) {
+    allProjArr[i].id = i;
+    allNodes[i].setAttribute("data-id", i);
+  }
+
+  // update counter on right
+  organize(allProjArr);
   console.log(allProjArr);
 };
 
@@ -150,6 +168,23 @@ const createTask = (e) => {
   document.getElementById("taskDesc").value = "";
 };
 
+// organize into arrays by day, week, complete
+const organize = (e) => {
+  projWeekArr = [];
+  projTodayArr = [];
+  for (let i = 0; i <= e.length - 1; i++) {
+    if (e[i].countdown <= 7 && e[i].countdown >= 2) {
+      projWeekArr.push(e[i]);
+    } else if (e[i].countdown <= 1) {
+      projTodayArr.push(e[i]);
+      projWeekArr.push(e[i]);
+    }
+  }
+  allProjsNum.textContent = allProjArr.length;
+  todayNum.textContent = projTodayArr.length;
+  weekNum.textContent = projWeekArr.length;
+};
+
 // create project
 //
 const createProject = (e) => {
@@ -162,6 +197,9 @@ const createProject = (e) => {
       document.getElementById("startDateInput").value
     );
     allProjArr[activeProjNum].endDate = dateFormat(
+      document.getElementById("endDateInput").value
+    );
+    allProjArr[activeProjNum].countdown = daysLeftFunc(
       document.getElementById("endDateInput").value
     );
 
@@ -200,7 +238,8 @@ const createProject = (e) => {
       projName,
       projPriority,
       projStartDate,
-      projEndDate
+      projEndDate,
+      daysLeft
     );
 
     // create proj wrapper
@@ -284,7 +323,8 @@ const createProject = (e) => {
   }
 
   // update counter on right
-  allProjsNum.textContent = allProjArr.length;
+  organize(allProjArr);
+
   editProj = false;
   // close popup
   closeNewProject();
@@ -292,4 +332,5 @@ const createProject = (e) => {
   document.getElementById("projName").value = "";
   document.getElementById("startDateInput").value = "";
   document.getElementById("endDateInput").value = "";
+  console.log(allProjArr);
 };

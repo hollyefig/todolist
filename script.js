@@ -3,6 +3,15 @@
 const doc = document.documentElement,
   allProjectsWrapper = document.querySelector(".allProjects");
 
+// const proj1 = {
+//   countdown: 4,
+//   endDate: "02-07-2023",
+//   id: 0,
+//   name: "Proj 1",
+//   priority: "Low",
+//   startDate: "02-04-2023",
+// };
+
 let blurBg = false,
   allProjArr = [],
   projTodayArr = [],
@@ -122,7 +131,6 @@ const deleteProject = (e) => {
 
   // update counter on right
   organize(allProjArr);
-  console.log(allProjArr);
 };
 
 // add new task popup
@@ -135,8 +143,57 @@ const addNewTask = (e) => {
   activeProj = e.parentNode.childNodes[0];
 };
 
+// project view adjustment
+const viewAdjust = (e) => {
+  let elements = document.querySelectorAll(".projNodeWrapper");
+  for (i = 0; i < allProjArr.length; i++) {
+    elements[i].classList.remove("displayNone");
+  }
+
+  if (e.id === "allProjectsList") {
+    // update selected node
+    let allNodes = e.parentNode.children;
+    for (let i = 0; i < allNodes.length; i++) {
+      allNodes[i].removeAttribute("class");
+    }
+    e.setAttribute("class", "active");
+
+    for (i = 0; i < allProjArr.length; i++) {
+      elements[i].classList.remove("displayNone");
+    }
+  } else if (e.id === "weekList") {
+    // update selected node
+    let allNodes = e.parentNode.children;
+    for (let i = 0; i < allNodes.length; i++) {
+      allNodes[i].removeAttribute("class");
+    }
+    e.setAttribute("class", "active");
+
+    // filter
+    allProjArr.filter((e) => {
+      if (e.countdown >= 8) {
+        elements[e.id].classList.add("displayNone");
+      }
+    });
+  } else if (e.id === "todayList") {
+    // update selected node
+    let allNodes = e.parentNode.children;
+    for (let i = 0; i < allNodes.length; i++) {
+      allNodes[i].removeAttribute("class");
+    }
+    e.setAttribute("class", "active");
+
+    allProjArr.filter((e) => {
+      if (e.countdown >= 2) {
+        elements[e.id].classList.add("displayNone");
+      }
+    });
+  }
+};
+
 // create task
-//
+////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////
 const createTask = (e) => {
   let taskName = document.getElementById("taskName").value,
     taskDesc = document.getElementById("taskDesc").value;
@@ -170,37 +227,23 @@ const createTask = (e) => {
 
 // organize into arrays by day, week, complete
 const organize = (e) => {
-  projWeekArr = [];
-  projTodayArr = [];
-  for (let i = 0; i <= e.length - 1; i++) {
-    if (e[i].countdown <= 7 && e[i].countdown >= 2) {
-      projWeekArr.push(e[i]);
-    } else if (e[i].countdown <= 1) {
-      projTodayArr.push(e[i]);
-      projWeekArr.push(e[i]);
-    }
-  }
   allProjsNum.textContent = allProjArr.length;
-  todayNum.textContent = projTodayArr.length;
-  weekNum.textContent = projWeekArr.length;
+  todayNum.textContent = allProjArr.filter((e) => e.countdown === 1).length;
+  weekNum.textContent = allProjArr.filter((e) => e.countdown <= 7).length;
 };
 
 // create project
 //
 const createProject = (e) => {
+  const form = e.parentNode.parentNode.children;
   // if edit is active
   if (editProj === true) {
-    allProjArr[activeProjNum].name = document.getElementById("projName").value;
-    allProjArr[activeProjNum].priority =
-      document.getElementById("prioritySelect").value;
-    allProjArr[activeProjNum].startDate = dateFormat(
-      document.getElementById("startDateInput").value
-    );
-    allProjArr[activeProjNum].endDate = dateFormat(
-      document.getElementById("endDateInput").value
-    );
+    allProjArr[activeProjNum].name = form[0].children[1].value;
+    allProjArr[activeProjNum].priority = form[1].children[0].value;
+    allProjArr[activeProjNum].startDate = dateFormat(form[2].children[0].value);
+    allProjArr[activeProjNum].endDate = dateFormat(form[3].children[0].value);
     allProjArr[activeProjNum].countdown = daysLeftFunc(
-      document.getElementById("endDateInput").value
+      form[3].children[0].value
     );
 
     // grab the selected div
@@ -221,17 +264,13 @@ const createProject = (e) => {
     // reset active proj
     activeProjNum = null;
   } else if (editProj === false) {
-    let projName = document.getElementById("projName").value,
-      projPriority = document.getElementById("prioritySelect").value,
-      projStartDate = document.getElementById("startDateInput").value,
-      projEndDate = document.getElementById("endDateInput").value;
+    let projName = form[0].children[1].value,
+      projPriority = form[1].children[0].value,
+      projStartDate = dateFormat(form[2].children[0].value),
+      projEndDate = dateFormat(form[3].children[0].value);
 
     // days left
-    const daysLeft = daysLeftFunc(projEndDate);
-
-    // reformat dates
-    projStartDate = dateFormat(projStartDate);
-    projEndDate = dateFormat(projEndDate);
+    const daysLeft = daysLeftFunc(form[3].children[0].value);
 
     // construct object
     let newProjObj = projConstruct(

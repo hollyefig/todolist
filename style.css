@@ -47,9 +47,6 @@ body {
     border-radius: 10px;
 }
 
-.displayNone {
-    display: none;
-}
 
 
 /* new project popup grid  */
@@ -601,5 +598,12 @@ body {
     font-size: .8rem;
     color: #a9a9a9;
     font-style: italic;
+}
+
+
+/* display None */
+/* keep this at the bottom  */
+.displayNone {
+    display: none;
 }
 

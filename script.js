@@ -14,15 +14,47 @@ const doc = document.documentElement,
 
 let blurBg = false,
   allProjArr = [],
-  projCompleteArr = [],
   activeProj,
   editProj = false,
   activeProjNum;
-
 // theme set
 const theme = (() => {
   doc.className = "default";
 })();
+
+// mobile function
+const mobileFunc = (e) => {
+  let allProjIcon = document.getElementById("allProjectsList").children[0],
+    projTodayIcon = document.getElementById("todayList").children[0],
+    projWeekIcon = document.getElementById("weekList").children[0],
+    projCompletecon = document.getElementById("completedList").children[0];
+
+  if (e.outerWidth <= 920) {
+    allProjIcon.classList.add("material-symbols-outlined");
+    allProjIcon.textContent = "home";
+    projTodayIcon.classList.add("material-symbols-outlined");
+    projTodayIcon.textContent = "today";
+    projWeekIcon.classList.add("material-symbols-outlined");
+    projWeekIcon.textContent = "date_range";
+    projCompletecon.classList.add("material-symbols-outlined");
+    projCompletecon.textContent = "task_alt";
+  } else {
+    allProjIcon.classList.remove("material-symbols-outlined");
+    allProjIcon.textContent = "All Projects";
+    projTodayIcon.classList.remove("material-symbols-outlined");
+    projTodayIcon.textContent = "Today";
+    projWeekIcon.classList.remove("material-symbols-outlined");
+    projWeekIcon.textContent = "This Week";
+    projCompletecon.classList.remove("material-symbols-outlined");
+    projCompletecon.textContent = "Completed";
+  }
+};
+
+// mobile read
+window.addEventListener("resize", () => mobileFunc(this));
+if (window.outerWidth <= 920) {
+  mobileFunc(this);
+}
 
 // project number counter
 let allProjsNum = document.getElementById("allProjsNum").childNodes[1],
@@ -57,7 +89,7 @@ document.addEventListener("keydown", (e) => {
   }
 });
 
-// construct project
+// construct project object
 const projConstruct = (name, priority, start, end, countdown) => {
   return {
     name: name,

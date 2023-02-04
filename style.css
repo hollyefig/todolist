@@ -650,6 +650,61 @@ body {
     font-style: italic;
 }
 
+@media only screen and (max-width: 920px) {
+    .wrapper {
+        grid-template-columns: 1fr;
+        grid-template-rows: 70px 5fr 1fr;
+    }
+
+    .sideBar {
+        height: 15vh;
+        grid-template-columns: 1fr;
+        grid-template-rows: 1.5fr 1fr;
+        grid-column: 1 / 2;
+        grid-row: 3 / 4;
+        overflow-x: hidden;
+    }
+
+    .listWrapper {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        margin:0px;
+        overflow-y:hidden;
+        overflow-x: hidden;
+
+    }
+
+    .listWrapper > div {
+        justify-items: start;
+        margin:0px 0px 1em 0px;
+        position: relative;
+        grid-template-columns: 1fr;
+        display: flex;
+        justify-content: center;
+    }
+
+    .listWrapper > div > div {
+        align-items: start;
+        padding:.5em 0px 0px 0px;
+        position: absolute;
+        top: -2px;
+        margin: 0px 0px 0px 42px;
+
+    }
+
+    .listWrapper > div:hover::after,
+    .listWrapper > div.active::after {
+        width:25vw;
+    }
+
+    .listWrapper > div > div > div {
+        --dim: 22px;
+        width: var(--dim);
+        height: var(--dim);
+        font-size: .8rem;
+    }
+}
+
 
 /* display None */
 /* keep this at the bottom  */

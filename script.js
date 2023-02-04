@@ -14,8 +14,6 @@ const doc = document.documentElement,
 
 let blurBg = false,
   allProjArr = [],
-  projTodayArr = [],
-  projWeekArr = [],
   projCompleteArr = [],
   activeProj,
   editProj = false,
@@ -33,9 +31,9 @@ let allProjsNum = document.getElementById("allProjsNum").childNodes[1],
   completedNum = document.getElementById("completedNum").childNodes[1];
 
 allProjsNum.textContent = allProjArr.length;
-todayNum.textContent = projTodayArr.length;
-weekNum.textContent = projWeekArr.length;
-completedNum.textContent = projCompleteArr.length;
+todayNum.textContent = allProjArr.filter((e) => e.countdown === 1).length;
+weekNum.textContent = allProjArr.filter((e) => e.countdown <= 7).length;
+completedNum.textContent = allProjArr.filter((e) => e.complete === true).length;
 
 // new project popup
 const openNewProject = () => {
@@ -67,8 +65,10 @@ const projConstruct = (name, priority, start, end, countdown) => {
     startDate: start,
     endDate: end,
     countdown: countdown,
+    complete: false,
   };
 };
+
 // create proj id
 const projId = (e) => {
   let curr = e[e.length - 1];
@@ -90,6 +90,19 @@ const daysLeftFunc = (e) => {
   const secondDate = new Date(dateSplit[0], dateSplit[1] - 1, dateSplit[2]);
 
   return Math.round(Math.abs((firstDate - secondDate) / oneDay)) + 1;
+};
+
+//mark complete
+const markComplete = (e) => {
+  let num = Number(e.parentNode.parentNode.getAttribute("data-id"));
+  let label = e.parentNode.children[1];
+  e.checked === true
+    ? ((allProjArr[num].complete = true), (label.textContent = "Complete"))
+    : ((allProjArr[num].complete = false), (label.textContent = "Incomplete"));
+
+  completedNum.textContent = allProjArr.filter(
+    (e) => e.complete === true
+  ).length;
 };
 
 // edit project
@@ -161,7 +174,9 @@ const viewAdjust = (e) => {
     for (i = 0; i < allProjArr.length; i++) {
       elements[i].classList.remove("displayNone");
     }
-  } else if (e.id === "weekList") {
+  }
+  // filter week
+  else if (e.id === "weekList") {
     // update selected node
     let allNodes = e.parentNode.children;
     for (let i = 0; i < allNodes.length; i++) {
@@ -175,7 +190,9 @@ const viewAdjust = (e) => {
         elements[e.id].classList.add("displayNone");
       }
     });
-  } else if (e.id === "todayList") {
+  }
+  // filter today
+  else if (e.id === "todayList") {
     // update selected node
     let allNodes = e.parentNode.children;
     for (let i = 0; i < allNodes.length; i++) {
@@ -183,8 +200,25 @@ const viewAdjust = (e) => {
     }
     e.setAttribute("class", "active");
 
+    // filter
     allProjArr.filter((e) => {
       if (e.countdown >= 2) {
+        elements[e.id].classList.add("displayNone");
+      }
+    });
+  }
+  // filter completed
+  else if (e.id === "completedList") {
+    // update selected node
+    let allNodes = e.parentNode.children;
+    for (let i = 0; i < allNodes.length; i++) {
+      allNodes[i].removeAttribute("class");
+    }
+    e.setAttribute("class", "active");
+
+    // filter
+    allProjArr.filter((e) => {
+      if (e.complete !== true) {
         elements[e.id].classList.add("displayNone");
       }
     });
@@ -250,14 +284,14 @@ const createProject = (e) => {
     let edited = document.querySelectorAll(".projNodeWrapper")[activeProjNum];
 
     // make edits
-    edited.childNodes[0].setAttribute(
+    edited.children[0].setAttribute(
       "class",
       `projPriorityColor ${allProjArr[activeProjNum].priority}`
     );
-    edited.childNodes[1].textContent = allProjArr[activeProjNum].name;
-    edited.childNodes[3].textContent = allProjArr[activeProjNum].startDate;
-    edited.childNodes[4].textContent = allProjArr[activeProjNum].endDate;
-    edited.childNodes[5].textContent = daysLeftFunc(
+    edited.children[1].textContent = allProjArr[activeProjNum].name;
+    edited.children[4].textContent = allProjArr[activeProjNum].startDate;
+    edited.children[5].textContent = allProjArr[activeProjNum].endDate;
+    edited.children[6].textContent = daysLeftFunc(
       document.getElementById("endDateInput").value
     );
 
@@ -317,6 +351,15 @@ const createProject = (e) => {
     projNameDiv.setAttribute("class", "projName");
     projNameDiv.textContent = newProjObj.name;
 
+    const projCompleteDiv = document.createElement("div");
+    projCompleteDiv.setAttribute("class", "projCompleteDiv");
+    const projCompleteCheckbox = document.createElement("input");
+    projCompleteCheckbox.setAttribute("type", "checkbox");
+    projCompleteCheckbox.setAttribute("onclick", "markComplete(this)");
+    projCompleteCheckbox.setAttribute("class", "markComplete");
+    let checkboxLabel = document.createElement("label");
+    checkboxLabel.textContent = "Incomplete";
+
     const projStartDiv = document.createElement("div");
     projStartDiv.setAttribute("class", "projStartDiv");
     projStartDiv.textContent = newProjObj.startDate;
@@ -342,10 +385,12 @@ const createProject = (e) => {
     // append
     newTaskWrapper.append(uList, newTaskDiv);
     projEditorWrapper.append(projEditButton, projDeleteButton);
+    projCompleteDiv.append(projCompleteCheckbox, checkboxLabel);
 
     projNodeWrapper.append(
       projPriorityColor,
       projNameDiv,
+      projCompleteDiv,
       projEditorWrapper,
       projStartDiv,
       projEndDiv,
@@ -371,5 +416,4 @@ const createProject = (e) => {
   document.getElementById("projName").value = "";
   document.getElementById("startDateInput").value = "";
   document.getElementById("endDateInput").value = "";
-  console.log(allProjArr);
 };

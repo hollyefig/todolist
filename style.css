@@ -669,7 +669,7 @@ body {
 @media only screen and (max-width: 920px) {
     .wrapper {
         grid-template-columns: 1fr;
-        grid-template-rows: 70px 5fr 1fr;
+        grid-template-rows: 70px 5fr 105px;
     }
 
     .sideBar {
@@ -679,6 +679,9 @@ body {
         grid-column: 1 / 2;
         grid-row: 3 / 4;
         overflow-x: hidden;
+        position: fixed;
+        width: 100%;
+        bottom: 0px;
     }
 
     .listWrapper {

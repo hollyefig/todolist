@@ -148,14 +148,12 @@ const editProject = (e) => {
     priority = document.getElementById("prioritySelect");
 
   let startDateSplit = allProjArr[activeProjNum].startDate.split("-");
+  let endDateSplit = allProjArr[activeProjNum].endDate.split("-");
 
   openNewProject();
   projName.value = allProjArr[activeProjNum].name;
-  startDate.setAttribute(
-    "value",
-    `${startDateSplit[2]}-${startDateSplit[0]}-${startDateSplit[1]}`
-  );
-  endDate.value = allProjArr[activeProjNum].endDate;
+  startDate.value = `${startDateSplit[2]}-${startDateSplit[0]}-${startDateSplit[1]}`;
+  endDate.value = `${endDateSplit[2]}-${endDateSplit[0]}-${endDateSplit[1]}`;
   priority.value = allProjArr[activeProjNum].priority;
 };
 

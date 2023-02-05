@@ -80,6 +80,10 @@ body {
     grid-row: 2 / 3;
     justify-content: center;
     align-items: center;
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    -o-appearance: none;
 }
 
 .newProjectPopGrid fieldset div:nth-child(3) {
@@ -116,6 +120,9 @@ body {
     margin: .5em 0px;
     border:0px;
     appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    -o-appearance: none;
     border-bottom: 1px solid var(--mainColor);
     background-color: var(--rightSideBg);
     font-family: var(--font);
@@ -405,6 +412,9 @@ body {
     --width: 100px;
     --height: 25px;
     appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    -o-appearance: none;
     width: var(--width);
     height:var(--height);
     padding:.3em .5em;
@@ -570,6 +580,9 @@ body {
     margin: .5em 0px;
     border:0px;
     appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    -o-appearance: none;
     border-bottom: 1px solid var(--mainColor);
     background-color: var(--rightSideBg);
     font-family: var(--font);
@@ -630,6 +643,9 @@ body {
 .taskCheckDiv input[type="checkbox"] {
     --dim: 15px;
     appearance:none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    -o-appearance: none;
     height: var(--dim);
     width: var(--dim);
     border-radius: 7px;

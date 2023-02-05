@@ -657,9 +657,9 @@ body {
     }
 
     .sideBar {
-        height: 15vh;
+        height: 105px;
         grid-template-columns: 1fr;
-        grid-template-rows: 1.5fr 1fr;
+        grid-template-rows: 1fr 1fr;
         grid-column: 1 / 2;
         grid-row: 3 / 4;
         overflow-x: hidden;
@@ -681,13 +681,14 @@ body {
         grid-template-columns: 1fr;
         display: flex;
         justify-content: center;
+        height: 45px;
     }
 
     .listWrapper > div > div {
         align-items: start;
         padding:.5em 0px 0px 0px;
         position: absolute;
-        top: -2px;
+        top: -6px;
         margin: 0px 0px 0px 42px;
 
     }
@@ -703,6 +704,26 @@ body {
         height: var(--dim);
         font-size: .8rem;
     }
+
+    .newProjectPopup {
+        --width: 320px;
+    }
+
+    .newTaskPopup {
+        --width: 300px;
+    }
+
+    .projNodeWrapper {
+        grid-template-columns: 2px 1fr 1fr 1fr;
+    }
+    
+    .projStartDiv, .projEndDiv {
+        font-size: .9rem;
+    }
+
+    .newProjectButton button {
+        align-self:none;
+}
 }
 
 

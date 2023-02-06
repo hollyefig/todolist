@@ -3,24 +3,28 @@
 const doc = document.documentElement,
   allProjectsWrapper = document.querySelector(".allProjects");
 
-// const proj1 = {
-//   countdown: 4,
-//   endDate: "02-07-2023",
-//   id: 0,
-//   name: "Proj 1",
-//   priority: "Low",
-//   startDate: "02-04-2023",
-// };
-
 let blurBg = false,
   allProjArr = [],
   activeProj,
   editProj = false,
-  activeProjNum;
+  activeProjNum,
+  nightMode = false;
+
 // theme set
 const theme = (() => {
   doc.className = "default";
 })();
+
+const themeSwitch = (e) => {
+  let button = e.children[2];
+  nightMode === false
+    ? ((button.style.left = "35px"),
+      (nightMode = true),
+      (doc.className = "night"))
+    : ((button.style.left = "0px"),
+      (nightMode = false),
+      (doc.className = "default"));
+};
 
 // mobile function
 const mobileFunc = (e) => {
@@ -447,3 +451,11 @@ const createProject = (e) => {
   document.getElementById("startDateInput").value = "";
   document.getElementById("endDateInput").value = "";
 };
+
+// invoke
+const invokeProj = (() => {
+  document.getElementById("projName").value = "Project 1";
+  document.getElementById("prioritySelect").value = "Low";
+  document.getElementById("startDateInput").value = "2023-02-05";
+  document.getElementById("endDateInput").value = "2023-02-15";
+})();

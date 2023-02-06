@@ -73,7 +73,6 @@ completedNum.textContent = allProjArr.filter((e) => e.complete === true).length;
 
 // new project popup
 const openNewProject = () => {
-  console.log(editProj);
   blurBg = true;
   document.getElementById("blurBg").classList.add("blurBg");
   document.getElementById("newProjectPopup").classList.remove("displayNone");
@@ -272,7 +271,6 @@ const viewAdjust = (e) => {
 };
 
 // create task
-////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////
 const createTask = (e) => {
   let taskName = e.parentNode.parentNode.children[0].children[1].value,
@@ -312,8 +310,24 @@ const organize = (e) => {
   weekNum.textContent = allProjArr.filter((e) => e.countdown <= 7).length;
 };
 
+// set local storage
+const setLocalStorage = (e) => {
+  // console.log(e[allProjArr.length - 1].id);
+
+  if (typeof Storage !== "undefined") {
+    // Store
+    localStorage.setItem("projIdStore", e[allProjArr.length - 1].id);
+    // Retrieve
+    console.log("get item", localStorage.getItem("projIdStore"));
+    document.getElementById("projName").value =
+      localStorage.getItem("projNameStore");
+  } else {
+    console.log("Web Storage not supported");
+  }
+};
+
 // create project
-//
+//////////////////////////////////////////////////////////////
 const createProject = (e) => {
   const form = e.parentNode.parentNode.children;
   // if edit is active
@@ -454,6 +468,8 @@ const createProject = (e) => {
 
   // update counter on right
   organize(allProjArr);
+  // local storage
+  setLocalStorage(allProjArr);
 
   editProj = false;
   // close popup

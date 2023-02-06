@@ -11,6 +11,7 @@ body {
     --complete: rgb(140 201 60);
     --incomplete:rgb(214, 76, 76);
     --mainColor: #98c8cb;
+    overflow-y: hidden;
 }
 
 .default {

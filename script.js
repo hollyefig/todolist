@@ -75,7 +75,7 @@ completedNum.textContent = allProjArr.filter((e) => e.complete === true).length;
 const openNewProject = () => {
   blurBg = true;
   document.getElementById("blurBg").classList.add("blurBg");
-  document.getElementById("newProjectPopup").classList.remove("displayNone");
+  document.getElementById("newProjectPopup").classList.add("slideDown");
   editProj === true
     ? (document.getElementById("createProjectButton").textContent = "Update")
     : (document.getElementById("createProjectButton").textContent =
@@ -92,8 +92,8 @@ const resetInputs = () => {
 // close new proj
 const closeNewProject = () => {
   document.getElementById("blurBg").classList.remove("blurBg");
-  document.getElementById("newProjectPopup").classList.add("displayNone");
-  document.getElementById("newTaskPopup").classList.add("displayNone");
+  document.getElementById("newProjectPopup").classList.remove("slideDown");
+  document.getElementById("newTaskPopup").classList.remove("slideDownTask");
 
   resetInputs();
   editProj = false;
@@ -196,7 +196,7 @@ const addNewTask = (e) => {
   let taskPopup = document.getElementById("newTaskPopup");
   blurBg = true;
   document.getElementById("blurBg").classList.add("blurBg");
-  taskPopup.classList.remove("displayNone");
+  taskPopup.classList.add("slideDownTask");
 
   activeProj = e.parentNode.childNodes[0];
 };

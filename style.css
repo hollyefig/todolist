@@ -15,6 +15,7 @@ body {
     --complete: rgb(140 201 60);
     --incomplete:rgb(214, 76, 76);
     --mainColor: #98c8cb;
+    --hoverColor: #65a5a9;
 }
 
 .default {
@@ -56,12 +57,17 @@ body {
     box-shadow: 2px 2px 8px var(--boxShadow);
     height: var(--height);
     width: var(--width);
-    top: calc(50% - var(--height) / 2);
+    top:-50vh;
     left: calc(50% - var(--width) / 2);
     border-radius: 10px;
+    transition: all .4s ease-out;
 }
 
-
+.slideDown {
+    --height: 300px;
+    --width: 500px;
+    top: calc(50% - var(--height) / 2);
+}
 
 /* new project popup grid  */
 
@@ -234,6 +240,11 @@ body {
     font-weight: var(--bold);
     color:var(--secondColor);
     border-radius: 10px;
+    transition: all .2s ease-in;
+}
+
+.createProjectButton button:hover {
+    background-color: var(--hoverColor);
 }
 
 /* begin wrapper  */
@@ -417,6 +428,11 @@ body {
     justify-content: center;
     grid-auto-flow: column;
     column-gap: 5px;
+    transition: all .2s ease-out;
+}
+
+.newProjectButton button:hover {
+    background-color: var(--hoverColor);
 }
 
 .newProjectButton button:focus {
@@ -616,13 +632,17 @@ body {
 .newTaskDiv {
     cursor: pointer;
     font-size: .8rem;
-    color: var(--mainColor);
+    background-color: var(--mainColor);
+    color: var(--secondColor);
     display: flex;
     padding:.5em;
-    background-color: transparent;
-    border:2px solid var(--mainColor);
     width: 100px;
     justify-content: center;
+    transition: all .2s ease-in;
+}
+
+.newTaskDiv:hover {
+    background-color: var(--hoverColor);
 }
 
 .newTaskPopup {
@@ -632,12 +652,19 @@ body {
     width: var(--width);
     height: var(--height);
     position: absolute;
-    top: calc(50% - var(--height) / 2);
+    top: -50vh;
     left: calc(50% - var(--width) / 2);
     background-color:var(--secondColor);
     padding:1em;
     border-radius: 10px;
     box-shadow: 2px 2px 8px var(--boxShadow);
+    transition: all .4s ease-out;
+}
+
+.slideDownTask {
+    --width: 40vw;
+    --height: 305px;
+    top: calc(50% - var(--height) / 2);
 }
 
 .newTaskPopup > div:first-child {
@@ -711,7 +738,12 @@ body {
     align-items: center;
     justify-content: center;
     grid-auto-flow: column;
-    column-gap: 5px;   
+    column-gap: 5px;
+    transition: all .2s ease-in;
+}
+
+.newTaskPopup fieldset button:hover {
+    background-color: var(--hoverColor);
 }
 
 .newTaskWrapper ul {
@@ -722,7 +754,7 @@ body {
     list-style-type: none;
     padding:.5em 0px;
     display:grid;
-    grid-template-rows: 1fr 1fr;
+    grid-template-rows: 1fr 2fr;
     grid-template-columns: 20px 1fr;
     row-gap:5px;
 }

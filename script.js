@@ -82,10 +82,18 @@ const openNewProject = () => {
         "Create Project");
 };
 
+const resetInputs = () => {
+  document.getElementById("projName").value = "";
+  document.getElementById("startDateInput").value = "";
+  document.getElementById("endDateInput").value = "";
+};
+
 const closeNewProject = () => {
   document.getElementById("blurBg").classList.remove("blurBg");
   document.getElementById("newProjectPopup").classList.add("displayNone");
   document.getElementById("newTaskPopup").classList.add("displayNone");
+
+  resetInputs();
 };
 document.addEventListener("keydown", (e) => {
   if (blurBg === true) {
@@ -263,8 +271,8 @@ const viewAdjust = (e) => {
 ////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////
 const createTask = (e) => {
-  let taskName = document.getElementById("taskName").value,
-    taskDesc = document.getElementById("taskDesc").value;
+  let taskName = e.parentNode.parentNode.children[0].children[1].value,
+    taskDesc = e.parentNode.parentNode.children[1].children[1].value;
 
   // create elements
   const taskLi = document.createElement("li"),
@@ -447,15 +455,27 @@ const createProject = (e) => {
   // close popup
   closeNewProject();
   // reset inputs
-  document.getElementById("projName").value = "";
-  document.getElementById("startDateInput").value = "";
-  document.getElementById("endDateInput").value = "";
+  resetInputs();
 };
 
-// invoke
+// invoke a test proj
 const invokeProj = (() => {
-  document.getElementById("projName").value = "Project 1";
+  document.getElementById("projName").value = "Minecraft House";
   document.getElementById("prioritySelect").value = "Low";
   document.getElementById("startDateInput").value = "2023-02-05";
-  document.getElementById("endDateInput").value = "2023-02-15";
+  document.getElementById("endDateInput").value = "2023-03-15";
+
+  createProject(document.getElementById("createProjectButton"));
+
+  addNewTask(document.querySelector(".newTaskDiv"));
+  document.getElementById("taskName").value = "Living Room";
+  document.getElementById("taskDesc").value =
+    "Carpet, windows, chairs, lanterns.";
+  createTask(document.getElementById("createTaskButton"));
+
+  addNewTask(document.querySelector(".newTaskDiv"));
+  document.getElementById("taskName").value = "Craft Room";
+  document.getElementById("taskDesc").value =
+    "2 Chests, 3 furnaces, 1 crafting table, 1 anvil.";
+  createTask(document.getElementById("createTaskButton"));
 })();

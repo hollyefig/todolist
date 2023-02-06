@@ -4,6 +4,10 @@
     box-sizing: border-box;
 }
 
+html, body {
+    overflow-y: hidden;
+}
+
 body {
     --bold: 700;
     font-family: 'Roboto Slab', serif;
@@ -11,7 +15,6 @@ body {
     --complete: rgb(140 201 60);
     --incomplete:rgb(214, 76, 76);
     --mainColor: #98c8cb;
-    overflow-y: hidden;
 }
 
 .default {
@@ -75,6 +78,7 @@ body {
     grid-template-columns: repeat(4, 1fr);
     grid-template-rows: 1fr 1fr 1fr;
     height: 100%;
+    align-items: end;
 }
 
 .newProjectPopGrid fieldset div:first-child {
@@ -168,6 +172,7 @@ body {
     -o-appearance: none;
     background-color: var(--rightSideBg);
     color: var(--inputColor);
+    margin: 0.5em 0px;
 }
 
 .newProjectPopGrid fieldset > div:nth-child(2) select:focus {

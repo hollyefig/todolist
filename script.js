@@ -73,6 +73,7 @@ completedNum.textContent = allProjArr.filter((e) => e.complete === true).length;
 
 // new project popup
 const openNewProject = () => {
+  console.log(editProj);
   blurBg = true;
   document.getElementById("blurBg").classList.add("blurBg");
   document.getElementById("newProjectPopup").classList.remove("displayNone");
@@ -82,18 +83,21 @@ const openNewProject = () => {
         "Create Project");
 };
 
+// reset inputs
 const resetInputs = () => {
   document.getElementById("projName").value = "";
   document.getElementById("startDateInput").value = "";
   document.getElementById("endDateInput").value = "";
 };
 
+// close new proj
 const closeNewProject = () => {
   document.getElementById("blurBg").classList.remove("blurBg");
   document.getElementById("newProjectPopup").classList.add("displayNone");
   document.getElementById("newTaskPopup").classList.add("displayNone");
 
   resetInputs();
+  editProj = false;
 };
 document.addEventListener("keydown", (e) => {
   if (blurBg === true) {

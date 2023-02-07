@@ -1,5 +1,7 @@
 // import format from "date-fns";
 
+console.log(localStorage);
+
 const doc = document.documentElement,
   allProjectsWrapper = document.querySelector(".allProjects");
 
@@ -312,18 +314,14 @@ const organize = (e) => {
 
 // set local storage
 const setLocalStorage = (e) => {
-  // console.log(e[allProjArr.length - 1].id);
-
-  if (typeof Storage !== "undefined") {
-    // Store
-    localStorage.setItem("projIdStore", e[allProjArr.length - 1].id);
-    // Retrieve
-    console.log("get item", localStorage.getItem("projIdStore"));
-    document.getElementById("projName").value =
-      localStorage.getItem("projNameStore");
-  } else {
-    console.log("Web Storage not supported");
-  }
+  // Store
+  window.localStorage.setItem(
+    "projArrStore",
+    JSON.stringify(allProjArr[allProjArr.length - 1].name)
+  );
+  // Retrieve
+  let arr = JSON.parse(window.localStorage.getItem("projArrStore"));
+  console.log(arr);
 };
 
 // create project

@@ -180,7 +180,8 @@ const editProject = (e) => {
 
 // delete project
 const deleteProject = (e) => {
-  const element = e.parentNode.parentNode;
+  const element = e.parentNode.parentNode.parentNode;
+  console.log("element", element);
   const num = Number(element.getAttribute("data-id"));
 
   allProjArr.splice(num, 1);
@@ -328,10 +329,13 @@ const deleteTask = (e) => {
 ////////////////////////////////////////////////////////////
 const createTask = (e) => {
   if (editTaskActive === true) {
+    //get form info
     let form = e.parentNode.parentNode,
+      // current project ID that is active
       projNum = parseInt(
         activeProj.parentNode.parentNode.parentNode.getAttribute("data-id")
       ),
+      // current active task obj to be edited
       taskObj =
         allProjArr[projNum].tasks[parseInt(activeProj.getAttribute("taskid"))];
 

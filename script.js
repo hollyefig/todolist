@@ -90,6 +90,8 @@ const resetInputs = () => {
   document.getElementById("projName").value = "";
   document.getElementById("startDateInput").value = "";
   document.getElementById("endDateInput").value = "";
+  document.getElementById("taskName").value = "";
+  document.getElementById("taskDesc").value = "";
 };
 
 // close new proj
@@ -384,8 +386,7 @@ const createTask = (e) => {
   // reset
   closeNewProject();
   activeProj = null;
-  document.getElementById("taskName").value = "";
-  document.getElementById("taskDesc").value = "";
+  editTaskActive = false;
 };
 
 // organize into arrays by day, week, complete

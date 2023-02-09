@@ -1,6 +1,6 @@
 // import format from "date-fns";
 
-console.log(localStorage);
+// console.log(localStorage);
 
 const doc = document.documentElement,
   allProjectsWrapper = document.querySelector(".allProjects");
@@ -10,7 +10,8 @@ let blurBg = false,
   activeProj,
   editProj = false,
   activeProjNum,
-  nightMode = false;
+  nightMode = false,
+  editTaskActive = false;
 
 // theme set
 const theme = (() => {
@@ -115,6 +116,7 @@ const projConstruct = (name, priority, start, end, countdown) => {
     endDate: end,
     countdown: countdown,
     complete: false,
+    tasks: [],
   };
 };
 
@@ -193,16 +195,6 @@ const deleteProject = (e) => {
   organize(allProjArr);
 };
 
-// add new task popup
-const addNewTask = (e) => {
-  let taskPopup = document.getElementById("newTaskPopup");
-  blurBg = true;
-  document.getElementById("blurBg").classList.add("blurBg");
-  taskPopup.classList.add("slideDownTask");
-
-  activeProj = e.parentNode.childNodes[0];
-};
-
 // project view adjustment
 const viewAdjust = (e) => {
   let elements = document.querySelectorAll(".projNodeWrapper");
@@ -272,31 +264,122 @@ const viewAdjust = (e) => {
   }
 };
 
+// add new task popup
+const addNewTask = (e) => {
+  let taskPopup = document.getElementById("newTaskPopup");
+  blurBg = true;
+  document.getElementById("blurBg").classList.add("blurBg");
+  taskPopup.classList.add("slideDownTask");
+
+  if (editTaskActive === true) {
+    activeProj = e;
+    let currTaskName = activeProj.querySelector(".taskNameDiv").textContent,
+      currTaskDesc = activeProj.querySelector(".taskDescDiv").textContent;
+
+    taskPopup.querySelector("#taskName").value = currTaskName;
+    taskPopup.querySelector("#taskDesc").value = currTaskDesc;
+  } else {
+    activeProj = e.parentNode.childNodes[0];
+  }
+};
+
+// task constructor
+const taskConstructor = (n, d) => {
+  return {
+    taskName: n,
+    taskDesc: d,
+  };
+};
+
+// edit task
+const editTask = (e) => {
+  editTaskActive = true;
+  let idNum = parseInt(e.parentNode.parentNode.getAttribute("taskid"));
+  addNewTask(e.parentNode.parentNode.parentNode.children[idNum]);
+};
+
+// delete task
+const deleteTask = (e) => {
+  let task = e.parentNode.parentNode,
+    taskNum = parseInt(task.getAttribute("taskID")),
+    projNum = parseInt(
+      task.parentNode.parentNode.parentNode.getAttribute("data-id")
+    ),
+    projDiv = document.querySelectorAll(".projNodeWrapper")[projNum];
+
+  // remove from array & div
+  task.remove();
+  allProjArr[projNum].tasks.splice(taskNum, 1);
+
+  // reorganize IDs
+  for (let i = 0; i < allProjArr[projNum].tasks.length; i++) {
+    projDiv
+      .querySelector(".newTaskWrapper")
+      .children[0].children[i].setAttribute(
+        "taskid",
+        allProjArr[projNum].tasks.length - 1
+      );
+  }
+};
+
 // create task
 ////////////////////////////////////////////////////////////
 const createTask = (e) => {
-  let taskName = e.parentNode.parentNode.children[0].children[1].value,
-    taskDesc = e.parentNode.parentNode.children[1].children[1].value;
+  if (editTaskActive === true) {
+    let form = e.parentNode.parentNode,
+      projNum = parseInt(
+        activeProj.parentNode.parentNode.parentNode.getAttribute("data-id")
+      ),
+      taskObj =
+        allProjArr[projNum].tasks[parseInt(activeProj.getAttribute("taskid"))];
 
-  // create elements
-  const taskLi = document.createElement("li"),
-    taskCheckDiv = document.createElement("div"),
-    taskInputCheck = document.createElement("input"),
-    taskNameDiv = document.createElement("div"),
-    taskDescDiv = document.createElement("div");
+    // update name
+    taskObj.taskName = form.querySelector("#taskName").value;
+    activeProj.querySelector(".taskNameDiv").textContent = taskObj.taskName;
+    // update desc
+    taskObj.taskDesc = form.querySelector("#taskDesc").value;
+    activeProj.querySelector(".taskDescDiv").textContent = taskObj.taskDesc;
+  } else {
+    let taskName = e.parentNode.parentNode.children[0].children[1].value,
+      taskDesc = e.parentNode.parentNode.children[1].children[1].value,
+      projIdNum = parseInt(
+        activeProj.parentNode.parentNode.getAttribute("data-id")
+      );
 
-  taskCheckDiv.setAttribute("class", "taskCheckDiv");
-  taskInputCheck.setAttribute("type", "checkbox");
-  taskNameDiv.setAttribute("class", "taskNameDiv");
-  taskDescDiv.setAttribute("class", "taskDescDiv");
+    allProjArr[projIdNum].tasks.push(taskConstructor(taskName, taskDesc));
 
-  taskNameDiv.textContent = taskName;
-  taskDescDiv.textContent = taskDesc;
+    // create elements
+    const taskLi = document.createElement("li"),
+      taskCheckDiv = document.createElement("div"),
+      taskInputCheck = document.createElement("input"),
+      taskNameDiv = document.createElement("div"),
+      taskDescDiv = document.createElement("div"),
+      taskEditDelDiv = document.createElement("div"),
+      taskEdit = document.createElement("div"),
+      taskDel = document.createElement("div");
 
-  // append elements
-  taskCheckDiv.appendChild(taskInputCheck);
-  taskLi.append(taskCheckDiv, taskNameDiv, taskDescDiv);
-  activeProj.appendChild(taskLi);
+    taskLi.setAttribute("taskID", allProjArr[projIdNum].tasks.length - 1);
+    taskCheckDiv.setAttribute("class", "taskCheckDiv");
+    taskInputCheck.setAttribute("type", "checkbox");
+    taskNameDiv.setAttribute("class", "taskNameDiv");
+    taskDescDiv.setAttribute("class", "taskDescDiv");
+    taskEditDelDiv.setAttribute("class", "taskEditDelDiv");
+    taskEdit.setAttribute("class", "taskEdit material-symbols-outlined");
+    taskEdit.setAttribute("onclick", "editTask(this)");
+    taskDel.setAttribute("class", "taskDel material-symbols-outlined");
+    taskDel.setAttribute("onclick", "deleteTask(this)");
+
+    taskNameDiv.textContent = taskName;
+    taskDescDiv.textContent = taskDesc;
+    taskEdit.textContent = "edit";
+    taskDel.textContent = "delete";
+
+    // append elements
+    taskCheckDiv.appendChild(taskInputCheck);
+    taskEditDelDiv.append(taskEdit, taskDel);
+    taskLi.append(taskCheckDiv, taskNameDiv, taskDescDiv, taskEditDelDiv);
+    activeProj.appendChild(taskLi);
+  }
 
   // reset
   closeNewProject();
@@ -321,7 +404,7 @@ const setLocalStorage = (e) => {
   );
   // Retrieve
   let arr = JSON.parse(window.localStorage.getItem("projArrStore"));
-  console.log(arr);
+  // console.log(arr);
 };
 
 // create project
@@ -441,7 +524,7 @@ const createProject = (e) => {
     newTaskDiv.textContent = "new task +";
 
     // append
-    newTaskWrapper.append(uList, newTaskDiv);
+    newTaskWrapper.append(uList, newTaskDiv, projEditorWrapper);
     projEditorWrapper.append(projEditButton, projDeleteButton);
     projCompleteDiv.append(projCompleteCheckbox, checkboxLabel);
 
@@ -449,7 +532,6 @@ const createProject = (e) => {
       projPriorityColor,
       projNameDiv,
       projCompleteDiv,
-      projEditorWrapper,
       projStartDiv,
       projEndDiv,
       daysLeftDiv,
@@ -474,6 +556,7 @@ const createProject = (e) => {
   closeNewProject();
   // reset inputs
   resetInputs();
+  console.log(allProjArr);
 };
 
 // invoke a test proj

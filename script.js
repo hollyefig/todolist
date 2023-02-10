@@ -569,7 +569,7 @@ const invokeProj = (() => {
   document.getElementById("projName").value = "Minecraft House";
   document.getElementById("prioritySelect").value = "Low";
   document.getElementById("startDateInput").value = "2023-02-05";
-  document.getElementById("endDateInput").value = "2023-03-15";
+  document.getElementById("endDateInput").value = "2023-10-15";
 
   createProject(document.getElementById("createProjectButton"));
 

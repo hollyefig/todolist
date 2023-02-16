@@ -1,6 +1,6 @@
 // import format from "date-fns";
 
-// console.log(localStorage);
+console.log(localStorage);
 
 const doc = document.documentElement,
   allProjectsWrapper = document.querySelector(".allProjects");
@@ -402,14 +402,15 @@ const organize = (e) => {
 
 // set local storage
 const setLocalStorage = (e) => {
+  console.log("set local", e);
   // Store
   window.localStorage.setItem(
-    "projArrStore",
-    JSON.stringify(allProjArr[allProjArr.length - 1].name)
+    "projName1",
+    JSON.stringify(allProjArr[e.length - 1].name)
   );
   // Retrieve
-  let arr = JSON.parse(window.localStorage.getItem("projArrStore"));
-  // console.log(arr);
+  let arr = JSON.parse(window.localStorage.getItem("projName1"));
+  console.log("arr", arr);
 };
 
 // create project
@@ -561,7 +562,7 @@ const createProject = (e) => {
   closeNewProject();
   // reset inputs
   resetInputs();
-  console.log(allProjArr);
+  console.log("allProjArr", allProjArr);
 };
 
 // invoke a test proj

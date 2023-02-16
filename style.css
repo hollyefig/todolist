@@ -355,7 +355,7 @@ body {
 
 .listWrapper span {
     display: block;
-    margin:0px 0px 0px .5em;
+    margin:0px 0px 0px 0em;
     padding:.6em 0px;
     color: var(--text);
 
@@ -838,7 +838,6 @@ body {
     }
 
     .listWrapper > div {
-        justify-items: start;
         margin:0px 0px 1em 0px;
         position: relative;
         grid-template-columns: 1fr;

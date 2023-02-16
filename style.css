@@ -16,6 +16,7 @@ body {
     --incomplete:rgb(214, 76, 76);
     --mainColor: #98c8cb;
     --hoverColor: #65a5a9;
+    --disabled: #d4d4d4;
 }
 
 .default {
@@ -232,6 +233,7 @@ body {
     align-items: center;
 }
 
+
 .createProjectButton button {
     background-color: var(--mainColor);
     padding:.5em;
@@ -241,6 +243,14 @@ body {
     color:var(--secondColor);
     border-radius: 10px;
     transition: all .2s ease-in;
+}
+
+.createProjectButton button:disabled {
+    background-color: var(--disabled);
+}
+
+.createProjectButton button:hover:disabled {
+    background-color: var(--disabled);
 }
 
 .createProjectButton button:hover {
@@ -747,6 +757,15 @@ body {
 .newTaskPopup fieldset button:hover {
     background-color: var(--hoverColor);
 }
+
+.newTaskPopup fieldset button:disabled {
+    background-color: var(--disabled);
+}
+
+.newTaskPopup fieldset button:hover:disabled {
+    background-color: var(--disabled);
+}
+
 
 .newTaskWrapper ul {
     margin: 0px 0px .5em 1.5em;

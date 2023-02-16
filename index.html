@@ -18,13 +18,13 @@
     <div id="blurBg" onclick="closeNewProject()"></div>
     <div class="newProjectPopup" id="newProjectPopup">
         
-        <div class="newProjectPopGrid">
+        <div class="newProjectPopGrid" id="newProjectPopGrid">
         <div class="newProjTitle">New Project</div>
         <form action="">
             <fieldset>
                 <div>
                     <label for="projName">Project Name</label>
-                    <input type="text" name="projName" id="projName" value="" />
+                    <input type="text" name="projName" id="projName" onchange="validate(this)" />
                 </div>
 
                 <div>
@@ -36,11 +36,11 @@
                 </div>
 
                 <div>
-                    <input type="date" name="startDateInput" id="startDateInput" />
+                    <input type="date" name="startDateInput" id="startDateInput" onchange="validate(this)"/>
                 </div>
                 
                 <div>
-                    <input type="date" name="endDateInput" id="endDateInput" />
+                    <input type="date" name="endDateInput" id="endDateInput" onchange="validate(this)" />
                 </div>
 
                 <div class="createProjectButton">
@@ -59,16 +59,16 @@
             <fieldset>
                 <div>
                     <label for="tastName">Name</label>
-                    <input type="text" name="taskName" id="taskName" />
+                    <input type="text" name="taskName" id="taskName" onchange="validate(this)" />
                 </div>
                 
                 <div>
                     <label for="taskDesc">Description</label>
-                    <textarea id="taskDesc" class="taskDesc" name="taskDesc"></textarea>
+                    <textarea id="taskDesc" class="taskDesc" name="taskDesc" onchange="validate(this)"></textarea>
                 </div>
 
                 <div>
-                    <button type="button" onclick="createTask(this)" id="createTaskButton">Create Task</button>
+                    <button type="button" onclick="createTask(this)" id="createTaskButton" class="createTaskButton">Create Task</button>
                 </div>
             </fieldset>
         </form>

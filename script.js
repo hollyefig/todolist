@@ -1,6 +1,4 @@
-// import format from "date-fns";
-
-console.log(localStorage);
+// console.log(localStorage);
 
 const doc = document.documentElement,
   allProjectsWrapper = document.querySelector(".allProjects");
@@ -11,7 +9,45 @@ let blurBg = false,
   editProj = false,
   activeProjNum,
   nightMode = false,
-  editTaskActive = false;
+  editTaskActive = false,
+  createProjButton = document.getElementById("createProjectButton");
+createTaskButton = document.getElementById("createTaskButton");
+
+createProjButton.setAttribute("disabled", "true");
+createTaskButton.setAttribute("disabled", "true");
+
+// validation check
+const validate = (e) => {
+  console.log();
+  let projName = document.getElementById("projName"),
+    projStartDate = document.getElementById("startDateInput"),
+    projEndDate = document.getElementById("endDateInput"),
+    taskName = document.getElementById("taskName"),
+    taskDesc = document.getElementById("taskDesc");
+
+  // for proj
+  if (
+    e.parentNode.parentNode.parentNode.parentNode.id === "newProjectPopGrid"
+  ) {
+    if (
+      projName.value !== "" &&
+      projStartDate.value !== "" &&
+      projEndDate.value !== ""
+    ) {
+      createProjButton.removeAttribute("disabled", "true");
+    } else {
+      createProjButton.setAttribute("disabled", "true");
+    }
+  }
+
+  if (e.parentNode.parentNode.parentNode.parentNode.id === "newTaskPopup") {
+    if (taskName.value !== "" && taskDesc.value !== "") {
+      createTaskButton.removeAttribute("disabled", "true");
+    } else {
+      createTaskButton.setAttribute("disabled", "true");
+    }
+  }
+};
 
 // theme set
 const theme = (() => {
@@ -181,7 +217,6 @@ const editProject = (e) => {
 // delete project
 const deleteProject = (e) => {
   const element = e.parentNode.parentNode.parentNode;
-  console.log("element", element);
   const num = Number(element.getAttribute("data-id"));
 
   allProjArr.splice(num, 1);
@@ -391,6 +426,7 @@ const createTask = (e) => {
   closeNewProject();
   activeProj = null;
   editTaskActive = false;
+  createTaskButton.setAttribute("disabled", "true");
 };
 
 // organize into arrays by day, week, complete
@@ -402,7 +438,7 @@ const organize = (e) => {
 
 // set local storage
 const setLocalStorage = (e) => {
-  console.log("set local", e);
+  // console.log("set local", e);
   // Store
   window.localStorage.setItem(
     "projName1",
@@ -410,7 +446,7 @@ const setLocalStorage = (e) => {
   );
   // Retrieve
   let arr = JSON.parse(window.localStorage.getItem("projName1"));
-  console.log("arr", arr);
+  // console.log("arr", arr);
 };
 
 // create project
@@ -563,6 +599,7 @@ const createProject = (e) => {
   // reset inputs
   resetInputs();
   console.log("allProjArr", allProjArr);
+  createProjButton.setAttribute("disabled", "true");
 };
 
 // invoke a test proj

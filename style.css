@@ -355,10 +355,9 @@ body {
 
 .listWrapper span {
     display: block;
-    margin:0px 0px 0px 0em;
+    margin:0px 0px 0px .5em;
     padding:.6em 0px;
     color: var(--text);
-
 }
 
 .listWrapper > div::after {
@@ -844,6 +843,13 @@ body {
         display: flex;
         justify-content: center;
         height: 45px;
+    }
+
+    .listWrapper span {
+        display: block;
+        margin:0px 0px 0px 0em;
+        padding:.6em 0px;
+        color: var(--text);
     }
 
     .listWrapper > div > div {

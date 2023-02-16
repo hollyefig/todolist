@@ -894,6 +894,13 @@ body {
 }
 }
 
+@media only screen and (max-width: 425px) {
+
+    .topBar > h1 {
+        font-size: 7vw;
+    }
+
+ }
 
 /* display None */
 /* keep this at the bottom  */

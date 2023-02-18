@@ -138,6 +138,7 @@ const closeNewProject = () => {
 
   resetInputs();
   editProj = false;
+  editTaskActive = false;
 };
 document.addEventListener("keydown", (e) => {
   if (blurBg === true) {
@@ -196,6 +197,7 @@ const markComplete = (e) => {
 
 // edit project
 const editProject = (e) => {
+  createProjButton.removeAttribute("disabled", "true");
   editProj = true;
   activeProjNum = Number(e.parentNode.parentNode.getAttribute("data-id"));
 
@@ -311,6 +313,7 @@ const addNewTask = (e) => {
 
   if (editTaskActive === true) {
     activeProj = e;
+    document.getElementById("createTaskButton").textContent = "Update";
     let currTaskName = activeProj.querySelector(".taskNameDiv").textContent,
       currTaskDesc = activeProj.querySelector(".taskDescDiv").textContent;
 
@@ -318,6 +321,7 @@ const addNewTask = (e) => {
     taskPopup.querySelector("#taskDesc").value = currTaskDesc;
   } else {
     activeProj = e.parentNode.childNodes[0];
+    document.getElementById("createTaskButton").textContent = "Create Task";
   }
 };
 
@@ -331,6 +335,7 @@ const taskConstructor = (n, d) => {
 
 // edit task
 const editTask = (e) => {
+  createTaskButton.removeAttribute("disabled", "true");
   editTaskActive = true;
   let idNum = parseInt(e.parentNode.parentNode.getAttribute("taskid"));
   addNewTask(e.parentNode.parentNode.parentNode.children[idNum]);

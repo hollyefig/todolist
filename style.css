@@ -860,7 +860,6 @@ body {
         position: relative;
         grid-template-columns: 1fr;
         display: flex;
-        flex-direction: column;
         justify-content: center;
         height: 45px;
     }

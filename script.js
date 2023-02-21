@@ -480,14 +480,20 @@ const createProject = (e) => {
       "class",
       `projPriorityColor ${allProjArr[activeProjNum].priority}`
     );
-    edited.children[1].textContent = allProjArr[activeProjNum].name;
-    edited.children[3].textContent = allProjArr[activeProjNum].startDate;
-    edited.children[4].textContent = allProjArr[activeProjNum].endDate;
-    edited.children[5].textContent = daysLeftFunc(
-      document.getElementById("endDateInput").value
-    );
 
-    console.log("edited", edited.children);
+    for (let i = 0; i <= edited.children.length - 1; i++) {
+      if (edited.children[i].id === "projName") {
+        edited.children[i].textContent = allProjArr[activeProjNum].name;
+      } else if (edited.children[i].id === "projStartDiv") {
+        edited.children[i].textContent = allProjArr[activeProjNum].startDate;
+      } else if (edited.children[i].id === "projEndDiv") {
+        edited.children[i].textContent = allProjArr[activeProjNum].endDate;
+      } else if (edited.children[i].id === "daysLeftDiv") {
+        edited.children[5].textContent = daysLeftFunc(
+          document.getElementById("endDateInput").value
+        );
+      }
+    }
 
     // reset active proj
     activeProjNum = null;
@@ -543,6 +549,7 @@ const createProject = (e) => {
     // name, date
     const projNameDiv = document.createElement("div");
     projNameDiv.setAttribute("class", "projName");
+    projNameDiv.id = "projName";
     projNameDiv.textContent = newProjObj.name;
 
     const projCompleteDiv = document.createElement("div");
@@ -556,14 +563,17 @@ const createProject = (e) => {
 
     const projStartDiv = document.createElement("div");
     projStartDiv.setAttribute("class", "projStartDiv");
+    projStartDiv.id = "projStartDiv";
     projStartDiv.textContent = newProjObj.startDate;
 
     const projEndDiv = document.createElement("div");
     projEndDiv.setAttribute("class", "projEndDiv");
+    projEndDiv.id = "projEndDiv";
     projEndDiv.textContent = newProjObj.endDate;
 
     const daysLeftDiv = document.createElement("div");
     daysLeftDiv.setAttribute("class", "daysLeftDiv");
+    daysLeftDiv.id = "daysLeftDiv";
     daysLeftDiv.textContent = daysLeft;
 
     // wrapper for tasks

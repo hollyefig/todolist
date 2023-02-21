@@ -860,6 +860,7 @@ body {
         position: relative;
         grid-template-columns: 1fr;
         display: flex;
+        flex-direction: column;
         justify-content: center;
         height: 45px;
     }
@@ -876,7 +877,7 @@ body {
         padding:.5em 0px 0px 0px;
         position: absolute;
         top: -6px;
-        margin: 0px 0px 0px 42px;
+        right:35px;
 
     }
 

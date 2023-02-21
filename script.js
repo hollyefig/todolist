@@ -16,6 +16,8 @@ createTaskButton = document.getElementById("createTaskButton");
 createProjButton.setAttribute("disabled", "true");
 createTaskButton.setAttribute("disabled", "true");
 
+console.log("editProj", editProj);
+
 // validation check
 const validate = (e) => {
   console.log();
@@ -199,7 +201,9 @@ const markComplete = (e) => {
 const editProject = (e) => {
   createProjButton.removeAttribute("disabled", "true");
   editProj = true;
-  activeProjNum = Number(e.parentNode.parentNode.getAttribute("data-id"));
+  activeProjNum = Number(
+    e.parentNode.parentNode.parentNode.getAttribute("data-id")
+  );
 
   const projName = document.getElementById("projName"),
     startDate = document.getElementById("startDateInput"),
@@ -477,11 +481,13 @@ const createProject = (e) => {
       `projPriorityColor ${allProjArr[activeProjNum].priority}`
     );
     edited.children[1].textContent = allProjArr[activeProjNum].name;
-    edited.children[4].textContent = allProjArr[activeProjNum].startDate;
-    edited.children[5].textContent = allProjArr[activeProjNum].endDate;
-    edited.children[6].textContent = daysLeftFunc(
+    edited.children[3].textContent = allProjArr[activeProjNum].startDate;
+    edited.children[4].textContent = allProjArr[activeProjNum].endDate;
+    edited.children[5].textContent = daysLeftFunc(
       document.getElementById("endDateInput").value
     );
+
+    console.log("edited", edited.children);
 
     // reset active proj
     activeProjNum = null;
